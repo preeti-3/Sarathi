@@ -1,26 +1,602 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Kurukshetra Dawn Theme */
+  --background: #0b0f1a;
+  --background-deep: #070a12;
+  --background-secondary: #0f172a;
+  --foreground: #e8e4dc;
+  --foreground-muted: #8b9099;
+
+  /* Royal Muted Gold Palette */
+  --gold-50: #f9f6ed;
+  --gold-100: #f0e9d4;
+  --gold-200: #e4d5a8;
+  --gold-300: #d4bf7a;
+  --gold-400: #c4a855;
+  --gold-500: #d4af37;
+  /* Royal muted gold */
+  --gold-600: #b8942e;
+  --gold-700: #947626;
+  --gold-800: #6b5520;
+  --gold-900: #4a3b18;
+
+  /* Cosmic Navy */
+  --navy-950: #070a12;
+  --navy-900: #0b0f1a;
+  --navy-800: #0f172a;
+  --navy-700: #1a2236;
+  --navy-600: #252d42;
+
+  /* Sacred accents */
+  --sacred-amber: #c9a227;
+  --sacred-cream: #f5f0e1;
+  --parchment: #f4ecd8;
+  --parchment-dark: #e8dcc6;
+
+  /* Fog colors */
+  --fog-light: rgba(139, 144, 153, 0.366);
+  --fog-warm: rgba(212, 175, 55, 0.425);
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-deep: var(--background-deep);
+  --color-background-secondary: var(--background-secondary);
   --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+
+  --color-gold-50: var(--gold-50);
+  --color-gold-100: var(--gold-100);
+  --color-gold-200: var(--gold-200);
+  --color-gold-300: var(--gold-300);
+  --color-gold-400: var(--gold-400);
+  --color-gold-500: var(--gold-500);
+  --color-gold-600: var(--gold-600);
+  --color-gold-700: var(--gold-700);
+  --color-gold-800: var(--gold-800);
+  --color-gold-900: var(--gold-900);
+
+  --color-navy-950: var(--navy-950);
+  --color-navy-900: var(--navy-900);
+  --color-navy-800: var(--navy-800);
+  --color-navy-700: var(--navy-700);
+  --color-navy-600: var(--navy-600);
+
+  --color-parchment: var(--parchment);
+  --color-parchment-dark: var(--parchment-dark);
+  --color-sacred-amber: var(--sacred-amber);
+  --color-sacred-cream: var(--sacred-cream);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-noto-serif);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ====================================================
+   BASE STYLES
+   ==================================================== */
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ====================================================
+   LAYER 1: COSMIC GRADIENT BACKGROUND
+   ==================================================== */
+
+.cosmic-gradient {
+  background: linear-gradient(180deg,
+      #0b0f1a 0%,
+      #0d1220 25%,
+      #0f172a 50%,
+      #0b0f1a 100%);
+}
+
+/* ====================================================
+   LAYER 2: BATTLEFIELD SILHOUETTE
+   ==================================================== */
+
+.battlefield-silhouette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.15;
+  background:
+    /* Distant army silhouettes - left */
+    radial-gradient(ellipse 120% 40% at 10% 85%, rgba(15, 23, 42, 0.9) 0%, transparent 60%),
+    /* Distant army silhouettes - right */
+    radial-gradient(ellipse 100% 35% at 90% 88%, rgba(15, 23, 42, 0.85) 0%, transparent 55%),
+    /* Central chariot hint */
+    radial-gradient(ellipse 30% 20% at 50% 90%, rgba(212, 175, 55, 0.08) 0%, transparent 70%),
+    /* Horizon glow - dawn */
+    radial-gradient(ellipse 200% 50% at 50% 100%, rgba(212, 175, 55, 0.04) 0%, transparent 40%);
+  filter: blur(2px);
+}
+
+/* ====================================================
+   LAYER 3: FOG ANIMATION
+   ==================================================== */
+
+.fog-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.fog-layer {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  mix-blend-mode: screen;
+}
+
+.fog-1 {
+  background:
+    radial-gradient(ellipse 600px 400px at 20% 30%, var(--fog-light) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 350px at 80% 60%, var(--fog-warm) 0%, transparent 80%),
+    radial-gradient(ellipse 700px 300px at 50% 80%, var(--fog-light) 0%, transparent 60%);
+  animation: fog-drift-1 40s ease-in-out infinite;
+  opacity: 0.9;
+}
+
+.fog-2 {
+  background:
+    radial-gradient(ellipse 500px 450px at 70% 40%, var(--fog-light) 0%, transparent 65%),
+    radial-gradient(ellipse 600px 300px at 30% 70%, var(--fog-warm) 0%, transparent 60%);
+  animation: fog-drift-2 80s ease-in-out infinite;
+  opacity: 0.6;
+}
+
+.fog-3 {
+  background:
+    radial-gradient(ellipse 800px 350px at 40% 50%, var(--fog-warm) 0%, transparent 70%),
+    radial-gradient(ellipse 550px 400px at 85% 30%, var(--fog-light) 0%, transparent 65%);
+  animation: fog-drift-3 100s ease-in-out infinite;
+  opacity: 0.06;
+}
+
+@keyframes fog-drift-1 {
+
+  0%,
+  100% {
+    transform: translateX(0%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-15%) translateY(10px);
+  }
+}
+
+@keyframes fog-drift-2 {
+
+  0%,
+  100% {
+    transform: translateX(-10%) translateY(5px);
+  }
+
+  50% {
+    transform: translateX(5%) translateY(-5px);
+  }
+}
+
+@keyframes fog-drift-3 {
+
+  0%,
+  100% {
+    transform: translateX(5%) translateY(-3px);
+  }
+
+  50% {
+    transform: translateX(-20%) translateY(8px);
+  }
+}
+
+.flying-bird {
+  background: url('/flying-bird.gif');
+  animation: fog-drift-1 40s ease-in-out infinite;
+}
+
+/* ====================================================
+   GOLDEN RADIAL GLOW
+   ==================================================== */
+
+.golden-aura {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+      rgba(212, 175, 55, 0.08) 0%,
+      rgba(212, 175, 55, 0.04) 30%,
+      rgba(212, 175, 55, 0.01) 60%,
+      transparent 80%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+/* ====================================================
+   MANUSCRIPT CARD (PARCHMENT STYLE)
+   ==================================================== */
+
+.manuscript-card {
+  position: relative;
+  background: linear-gradient(165deg,
+      #f4ecd8 0%,
+      #f0e6ce 50%,
+      #e8dcc6 100%);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 4px;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.3),
+    0 8px 48px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(139, 115, 85, 0.1);
+}
+
+.manuscript-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.manuscript-glow {
+  position: absolute;
+  inset: -60px;
+  background: radial-gradient(ellipse at center,
+      rgba(212, 175, 55, 0.06) 0%,
+      rgba(212, 175, 55, 0.02) 40%,
+      transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ====================================================
+   TYPOGRAPHY - SACRED TEXT
+   ==================================================== */
+
+.sanskrit-text {
+  font-family: 'Noto Serif Devanagari', 'Noto Serif', Georgia, serif;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+}
+
+.sanskrit-glow {
+  text-shadow:
+    0 0 30px rgba(212, 175, 55, 0.25),
+    0 0 60px rgba(212, 175, 55, 0.15),
+    0 0 90px rgba(212, 175, 55, 0.08);
+}
+
+.sanskrit-glow-warm {
+  text-shadow:
+    0 0 20px rgba(180, 140, 40, 0.3),
+    0 0 40px rgba(180, 140, 40, 0.15);
+}
+
+.transliteration-text {
+  font-family: 'Noto Serif', Georgia, serif;
+  font-style: italic;
+  letter-spacing: 0.05em;
+}
+
+.meaning-text {
+  font-family: 'Noto Serif', Georgia, serif;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
+}
+
+/* ====================================================
+   GOLDEN DIVIDER
+   ==================================================== */
+
+.golden-divider {
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(212, 175, 55, 0.2) 20%,
+      rgba(212, 175, 55, 0.5) 50%,
+      rgba(212, 175, 55, 0.2) 80%,
+      transparent 100%);
+}
+
+.golden-divider-short {
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(212, 175, 55, 0.6) 50%,
+      transparent 100%);
+}
+
+/* ====================================================
+   BUTTONS
+   ==================================================== */
+
+.btn-sacred {
+  position: relative;
+  padding: 16px 40px;
+  background: transparent;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  color: var(--gold-500);
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  overflow: hidden;
+}
+
+.btn-sacred::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(212, 175, 55, 0.1),
+      transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.btn-sacred:hover {
+  border-color: var(--gold-500);
+  box-shadow:
+    0 0 20px rgba(212, 175, 55, 0.15),
+    inset 0 0 20px rgba(212, 175, 55, 0.05);
+}
+
+.btn-sacred:hover::before {
+  transform: translateX(100%);
+}
+
+/* Hero button - more visible for backgrounds */
+.btn-sacred-hero {
+  position: relative;
+  display: inline-block;
+  padding: 18px 48px;
+  background: rgba(212, 175, 55, 0.15);
+  border: 2px solid rgba(212, 175, 55, 0.7);
+  color: var(--gold-400);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.btn-sacred-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(212, 175, 55, 0.2),
+      transparent);
+  transition: left 0.6s ease;
+}
+
+.btn-sacred-hero:hover {
+  background: rgba(212, 175, 55, 0.25);
+  border-color: var(--gold-400);
+  color: var(--gold-300);
+  box-shadow:
+    0 0 30px rgba(212, 175, 55, 0.3),
+    0 0 60px rgba(212, 175, 55, 0.15),
+    inset 0 0 20px rgba(212, 175, 55, 0.1);
+  transform: translateY(-2px);
+}
+
+.btn-sacred-hero:hover::before {
+  left: 100%;
+}
+
+/* ====================================================
+   SUBTLE UI ELEMENTS
+   ==================================================== */
+
+.border-glow {
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  box-shadow: inset 0 0 30px rgba(212, 175, 55, 0.02);
+}
+
+.card-ethereal {
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+/* ====================================================
+   SCROLLBAR
+   ==================================================== */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--navy-950);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.35);
+}
+
+/* ====================================================
+   ANIMATIONS
+   ==================================================== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes breathe {
+
+  0%,
+  100% {
+    opacity: 0.08;
+  }
+
+  50% {
+    opacity: 0.12;
+  }
+}
+
+@keyframes pulse-subtle {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 1s ease-out forwards;
+}
+
+.animate-breathe {
+  animation: breathe 8s ease-in-out infinite;
+}
+
+/* Animation delays */
+.delay-100 {
+  animation-delay: 100ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+.delay-300 {
+  animation-delay: 300ms;
+}
+
+.delay-400 {
+  animation-delay: 400ms;
+}
+
+.delay-500 {
+  animation-delay: 500ms;
+}
+
+.delay-600 {
+  animation-delay: 600ms;
+}
+
+.delay-700 {
+  animation-delay: 700ms;
+}
+
+.delay-800 {
+  animation-delay: 800ms;
+}
+
+/* ====================================================
+   AMBIENT SOUND TOGGLE
+   ==================================================== */
+
+.sound-toggle {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 50;
+  padding: 12px;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sound-toggle:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  background: rgba(15, 23, 42, 0.8);
+}
+
+/* ====================================================
+   UTILITY CLASSES
+   ==================================================== */
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.gold-glow {
+  box-shadow:
+    0 0 20px rgba(212, 175, 55, 0.15),
+    0 0 40px rgba(212, 175, 55, 0.08);
+}
+
+.transition-all-smooth {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
