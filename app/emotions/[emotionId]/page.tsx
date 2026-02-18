@@ -91,14 +91,14 @@ export default async function EmotionPage({ params }: EmotionPageProps) {
                 {/* Shloks List */}
                 {shloks.length > 0 ? (
                     <div
-                        className="space-y-4 mb-20 opacity-0 animate-fade-in-up"
+                        className="space-y-4 mb-20 opacity-0 animate-fade-in-up scroll-optimized"
                         style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}
                     >
                         {shloks.map((shlok) => (
                             <Link
                                 key={shlok.id}
                                 href={`/chapter/${shlok.chapter}/shlok/${shlok.verse}`}
-                                className="block group p-6 card-ethereal rounded-lg hover:border-gold-500/30 transition-all duration-500"
+                                className="verse-list-item block group p-6 card-ethereal rounded-lg hover:border-gold-500/30 transition-all duration-500"
                             >
                                 <div className="flex items-start justify-between gap-4">
                                     <div className="flex-1">

@@ -90,6 +90,21 @@ body {
 }
 
 /* ====================================================
+   BACKGROUND WRAPPER - GPU Accelerated Container
+   ==================================================== */
+
+.background-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  contain: strict;
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ====================================================
    LAYER 1: COSMIC GRADIENT BACKGROUND
    ==================================================== */
 
@@ -101,14 +116,24 @@ body {
       #0b0f1a 100%);
 }
 
+.cosmic-base {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+      #0b0f1a 0%,
+      #0d1220 25%,
+      #0f172a 50%,
+      #0b0f1a 100%);
+  z-index: 0;
+}
+
 /* ====================================================
    LAYER 2: BATTLEFIELD SILHOUETTE
    ==================================================== */
 
 .battlefield-silhouette {
-  position: fixed;
+  position: absolute;
   inset: 0;
-  pointer-events: none;
   z-index: 1;
   opacity: 0.15;
   background:
@@ -121,6 +146,8 @@ body {
     /* Horizon glow - dawn */
     radial-gradient(ellipse 200% 50% at 50% 100%, rgba(212, 175, 55, 0.04) 0%, transparent 40%);
   filter: blur(2px);
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 /* ====================================================
@@ -128,11 +155,12 @@ body {
    ==================================================== */
 
 .fog-container {
-  position: fixed;
+  position: absolute;
   inset: 0;
-  pointer-events: none;
   z-index: 2;
   overflow: hidden;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .fog-layer {
@@ -140,6 +168,9 @@ body {
   width: 200%;
   height: 100%;
   mix-blend-mode: screen;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .fog-1 {
@@ -148,7 +179,7 @@ body {
     radial-gradient(ellipse 500px 350px at 80% 60%, var(--fog-warm) 0%, transparent 80%),
     radial-gradient(ellipse 700px 300px at 50% 80%, var(--fog-light) 0%, transparent 60%);
   animation: fog-drift-1 40s ease-in-out infinite;
-  opacity: 0.9;
+  opacity: 0.09;
 }
 
 .fog-2 {
@@ -156,7 +187,7 @@ body {
     radial-gradient(ellipse 500px 450px at 70% 40%, var(--fog-light) 0%, transparent 65%),
     radial-gradient(ellipse 600px 300px at 30% 70%, var(--fog-warm) 0%, transparent 60%);
   animation: fog-drift-2 80s ease-in-out infinite;
-  opacity: 0.6;
+  opacity: 0.06;
 }
 
 .fog-3 {
@@ -201,11 +232,6 @@ body {
   50% {
     transform: translateX(-20%) translateY(8px);
   }
-}
-
-.flying-bird {
-  background: url('/flying-bird.gif');
-  animation: fog-drift-1 40s ease-in-out infinite;
 }
 
 /* ====================================================
@@ -599,4 +625,47 @@ body {
 
 .transition-all-smooth {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ====================================================
+   PERFORMANCE OPTIMIZATIONS
+   ==================================================== */
+
+/* Optimize scrollable content with content-visibility */
+.verse-list-item {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 120px;
+}
+
+/* Reduce paint during scroll */
+.scroll-optimized {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Hardware accelerated transitions */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* Loading skeleton shimmer */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg,
+      rgba(212, 175, 55, 0.05) 25%,
+      rgba(212, 175, 55, 0.1) 50%,
+      rgba(212, 175, 55, 0.05) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
 }

@@ -47,12 +47,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${notoSerifDevanagari.variable} ${notoSerif.variable} antialiased cosmic-gradient h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} ${notoSerifDevanagari.variable} ${notoSerif.variable} antialiased min-h-screen bg-background overflow-x-hidden`}
       >
-        {/* Layered background system */}
+        {/* Layered background system - GPU accelerated */}
         <BackgroundLayers />
 
-        <div className="relative z-10">
+        {/* Main content - scrolls over fixed background */}
+        <div className="relative z-10 min-h-screen scroll-optimized">
           {children}
         </div>
 

@@ -8,3 +8,4 @@ export { BookmarkButton } from './BookmarkButton';
 export { BackgroundLayers } from './BackgroundLayers';
 export { ManuscriptCard } from './ManuscriptCard';
 export { AmbientSoundToggle } from './AmbientSoundToggle';
+export { InfiniteVerseList } from './InfiniteVerseList';

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { getChapterById, getShloksByChapter, getAllChapters } from '@/lib/shloks';
+import { InfiniteVerseList } from '@/components/InfiniteVerseList';
 
 interface ChapterPageProps {
     params: Promise<{
@@ -92,33 +93,18 @@ export default async function ChapterPage({ params }: ChapterPageProps) {
                     </p>
                 </header>
 
-                {/* Shloks List */}
+                {/* Shloks List with Infinite Scrolling */}
                 {shloks.length > 0 ? (
                     <div
-                        className="space-y-4 mb-16 opacity-0 animate-fade-in-up"
+                        className="mb-16 opacity-0 animate-fade-in-up"
                         style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}
                     >
-                        {shloks.map((shlok) => (
-                            <Link
-                                key={shlok.id}
-                                href={`/chapter/${shlok.chapter}/shlok/${shlok.verse}`}
-                                className="block group p-6 card-ethereal rounded-lg hover:border-gold-500/30 transition-all duration-500"
-                            >
-                                <div className="flex items-start justify-between gap-4">
-                                    <div className="flex-1">
-                                        <p className="sanskrit-text text-lg text-gold-500/80 sanskrit-glow mb-3 line-clamp-1">
-                                            {shlok.sanskrit}
-                                        </p>
-                                        <p className="text-foreground-muted text-sm leading-relaxed line-clamp-2">
-                                            {shlok.simpleMeaning}
-                                        </p>
-                                    </div>
-                                    <span className="text-foreground-muted/40 text-sm whitespace-nowrap">
-                                        Verse {shlok.verse}
-                                    </span>
-                                </div>
-                            </Link>
-                        ))}
+                        <InfiniteVerseList
+                            shloks={shloks}
+                            chapterId={chapterId}
+                            initialLoadCount={15}
+                            loadMoreCount={10}
+                        />
                     </div>
                 ) : (
                     <div
